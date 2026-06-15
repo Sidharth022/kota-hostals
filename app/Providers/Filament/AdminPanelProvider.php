@@ -38,7 +38,7 @@ class AdminPanelProvider extends PanelProvider
             ->default()
             ->id('admin')
             ->path('admin')
-            ->login()
+            ->login(\App\Filament\Pages\Auth\AdminLogin::class)
             ->brandName('Kota Hostel Admin')
             ->brandLogo(null)
             ->favicon(asset('favicon.ico'))

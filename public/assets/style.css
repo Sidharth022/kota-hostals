@@ -14,7 +14,7 @@
 
    .hover-primary-bg,
    .card {
-    transition: 0.3s;
+       transition: 0.3s;
    }
 
    .font-outfit {
@@ -97,25 +97,32 @@
    .hover-card {
        transition: transform 0.25s ease, box-shadow 0.25s ease !important;
    }
+
    .hover-card:hover {
        transform: translateY(-5px);
        box-shadow: 0 1rem 3rem rgba(15, 23, 42, 0.08) !important;
    }
+
    .hover-scale {
        transition: transform 0.4s ease !important;
    }
+
    .hover-card:hover .hover-scale {
        transform: scale(1.04);
    }
+
    .rounded-4 {
        border-radius: 1rem !important;
    }
+
    .rounded-xl {
        border-radius: 0.75rem !important;
    }
+
    .hover-color-primary:hover {
        color: var(--bs-primary) !important;
    }
+
    .line-clamp-1 {
        display: -webkit-box;
        -webkit-line-clamp: 1;
@@ -127,6 +134,7 @@
    .min-vh-100-lg {
        min-height: 100vh;
    }
+
    @media (max-width: 991.98px) {
        .min-vh-100-lg {
            min-height: auto;
@@ -250,4 +258,4 @@
 
    .divider-text:not(:empty)::after {
        margin-left: .5em;
-   }
+   }
