@@ -34,8 +34,12 @@
                                 <label class="form-label small fw-bold text-dark mb-1">Select Area</label>
                                 <div class="input-group input-group-custom rounded-3 overflow-hidden">
                                     <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
-                                    <input type="text" id="homeSearchInput" class="form-control" placeholder="Choose Area">
-                                    <span class="input-group-text bg-transparent border-start-0 border-left-0"><i class="fa-solid fa-chevron-down small"></i></span>
+                                    <select id="homeAreaSelect" class="form-select border-end-0 text-muted">
+                                        <option value="">Choose Area</option>
+                                        @foreach($areas as $area)
+                                            <option value="{{ $area->slug }}">{{ $area->title }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             
@@ -43,11 +47,11 @@
                                 <label class="form-label small fw-bold text-dark mb-1">Near Coaching Institute</label>
                                 <div class="input-group input-group-custom rounded-3 overflow-hidden">
                                     <span class="input-group-text"><i class="fa-solid fa-building-columns"></i></span>
-                                    <select class="form-select border-end-0 text-muted">
-                                        <option selected>Select Coaching</option>
-                                        <option value="allen">Allen</option>
-                                        <option value="motion">Motion</option>
-                                        <option value="resonance">Resonance</option>
+                                    <select id="homeCoachingSelect" class="form-select border-end-0 text-muted">
+                                        <option value="">Select Coaching</option>
+                                        @foreach($allCoachingCenters as $coaching)
+                                            <option value="{{ $coaching->id }}">{{ $coaching->title }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -56,8 +60,8 @@
                                 <label class="form-label small fw-bold text-dark mb-1">Budget Range</label>
                                 <div class="input-group input-group-custom rounded-3 overflow-hidden">
                                     <span class="input-group-text"><i class="fa-solid fa-indian-rupee-sign"></i></span>
-                                    <select class="form-select border-end-0 text-muted">
-                                        <option selected>Any Budget</option>
+                                    <select id="homeBudgetSelect" class="form-select border-end-0 text-muted">
+                                        <option value="">Any Budget</option>
                                         <option value="low">Under ₹5,000</option>
                                         <option value="med">₹5,000 - ₹10,000</option>
                                         <option value="high">Above ₹10,000</option>
@@ -69,14 +73,14 @@
                         <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 pt-3">
                             <div class="d-flex align-items-center gap-2 flex-wrap">
                                 <span class="small fw-bold text-dark me-1">Popular Searches:</span>
-                                <a href="javascript:void(0)" class="popular-badge">Allen</a>
-                                <a href="javascript:void(0)" class="popular-badge">Motion</a>
-                                <a href="javascript:void(0)" class="popular-badge">Resonance</a>
-                                <a href="javascript:void(0)" class="popular-badge">Vibrant</a>
-                                <a href="javascript:void(0)" class="popular-badge">Unacademy</a>
+                                <a href="{{ route('hostels.index', ['search' => 'Allen']) }}" class="popular-badge">Allen</a>
+                                <a href="{{ route('hostels.index', ['search' => 'Motion']) }}" class="popular-badge">Motion</a>
+                                <a href="{{ route('hostels.index', ['search' => 'Resonance']) }}" class="popular-badge">Resonance</a>
+                                <a href="{{ route('hostels.index', ['search' => 'Vibrant']) }}" class="popular-badge">Vibrant</a>
+                                <a href="{{ route('hostels.index', ['search' => 'Unacademy']) }}" class="popular-badge">Unacademy</a>
                             </div>
                             
-                            <button onclick="window.location.href='/hostels?search=' + document.getElementById('homeSearchInput').value" class="btn btn-primary px-4 py-2.5 rounded-3 fw-semibold shadow-sm d-flex align-items-center justify-content-center gap-2" style="min-width: 170px;">
+                            <button onclick="performHomeSearch()" class="btn btn-primary px-4 py-2.5 rounded-3 fw-semibold shadow-sm d-flex align-items-center justify-content-center gap-2" style="min-width: 170px;">
                                 <i class="fa-solid fa-magnifying-glass"></i> Search
                             </button>
                         </div>
@@ -333,4 +337,33 @@
         </div>
     </div>
 
+    <!-- Scripts -->
+    <script>
+        function performHomeSearch() {
+            const area = document.getElementById('homeAreaSelect').value;
+            const coaching = document.getElementById('homeCoachingSelect').value;
+            const budget = document.getElementById('homeBudgetSelect').value;
+            
+            let url = new URL('{{ route('hostels.index') }}', window.location.origin);
+            
+            if (area) {
+                url.searchParams.append('area', area);
+            }
+            if (coaching) {
+                url.searchParams.append('coaching', coaching);
+            }
+            if (budget) {
+                if (budget === 'low') {
+                    url.searchParams.append('max_price', '5000');
+                } else if (budget === 'med') {
+                    url.searchParams.append('min_price', '5000');
+                    url.searchParams.append('max_price', '10000');
+                } else if (budget === 'high') {
+                    url.searchParams.append('min_price', '10000');
+                }
+            }
+            
+            window.location.href = url.toString();
+        }
+    </script>
 </x-app-layout>

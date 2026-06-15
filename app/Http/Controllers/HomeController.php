@@ -45,6 +45,9 @@ class HomeController extends Controller
             ->limit(4)
             ->get();
 
-        return view('welcome', compact('popularAreas', 'featuredHostels', 'coachingCenters', 'testimonials'));
+        $areas = Area::where('status', true)->orderBy('title')->get();
+        $allCoachingCenters = CoachingCenter::where('status', true)->orderBy('title')->get();
+
+        return view('welcome', compact('popularAreas', 'featuredHostels', 'coachingCenters', 'testimonials', 'areas', 'allCoachingCenters'));
     }
 }
