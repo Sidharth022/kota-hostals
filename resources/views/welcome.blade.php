@@ -307,8 +307,8 @@
                                     <p class="text-secondary italic small mb-0">"{{ \Illuminate\Support\Str::limit($t->review, 140) }}"</p>
                                 </div>
 
-                                <div class="d-flex align-items-center gap-3.5 pt-3 border-top border-light-subtle">
-                                    <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white font-bold rounded-circle uppercase text-xs" style="width: 32px; height: 32px;">
+                                <div class="d-flex  gap-3 pt-3 border-top border-light-subtle">
+                                    <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white font-bold rounded-circle uppercase text-xs" style="min-width: 32px; height: 32px;">
                                         {{ substr($t->user->name, 0, 1) }}
                                     </div>
                                     <div>

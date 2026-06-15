@@ -98,11 +98,11 @@
                 </div>
 
                 <div class="border-top border-secondary mt-4 pt-4 d-flex flex-col flex-md-row justify-content-between align-items-center text-muted small">
-                    <p class="mb-0">&copy; {{ date('Y') }} KotaHostel. All rights reserved.</p>
+                    <p class="mb-0 text-white-50">&copy; {{ date('Y') }} KotaHostel. All rights reserved.</p>
                     <div class="d-flex gap-3 mt-3 mt-md-0">
-                        <a href="#" class="text-muted hover:text-white"><i class="fa-brands fa-facebook fs-5"></i></a>
-                        <a href="#" class="text-muted hover:text-white"><i class="fa-brands fa-instagram fs-5"></i></a>
-                        <a href="#" class="text-muted hover:text-white"><i class="fa-brands fa-x-twitter fs-5"></i></a>
+                        <a href="#" class="text-white-50"><i class="fa-brands fa-facebook fs-5"></i></a>
+                        <a href="#" class="text-white-50"><i class="fa-brands fa-instagram fs-5"></i></a>
+                        <a href="#" class="text-white-50"><i class="fa-brands fa-x-twitter fs-5"></i></a>
                     </div>
                 </div>
             </div>
@@ -111,6 +111,7 @@
         <!-- jQuery & Bootstrap 5 Bundle JS -->
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 
         @stack('scripts')
         @livewireScripts

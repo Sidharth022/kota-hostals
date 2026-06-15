@@ -18,7 +18,6 @@ use Spatie\Sluggable\SlugOptions;
 class Hostel extends Model implements HasMedia
 {
     use HasFactory, HasSlug, InteractsWithMedia, LogsActivity, Searchable;
-
     protected $fillable = [
         'owner_id',
         'area_id',
@@ -131,7 +130,7 @@ class Hostel extends Model implements HasMedia
     }
 
     public function images(): HasMany
-    {
+    {   
         return $this->hasMany(HostelImage::class)->orderBy('sort_order');
     }
 
@@ -240,7 +239,7 @@ class Hostel extends Model implements HasMedia
     }
 
     public function setGalleryImagesAttribute($value): void
-    {
+    {   
         $value = is_array($value) ? array_filter($value) : [];
 
         $existingImages = $this->images()->get();
@@ -249,11 +248,10 @@ class Hostel extends Model implements HasMedia
         // Delete images that are not in the new list
         foreach ($existingImages as $img) {
             if (!in_array($img->image_path, $value)) {
-                \Illuminate\Support\Facades\Storage::disk('public')->delete($img->image_path);
+                // \Illuminate\Support\Facades\Storage::disk('public')->delete($img->image_path);
                 $img->delete();
             }
         }
-
         // Add new images or update sort order
         foreach ($value as $index => $path) {
             if (!in_array($path, $existingPaths)) {

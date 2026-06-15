@@ -27,6 +27,8 @@ class User extends Authenticatable implements HasMedia, FilamentUser
         'role_id',
         'profile_image',
         'status',
+        'google_id',
+        'facebook_id',
     ];
 
     protected $hidden = [
