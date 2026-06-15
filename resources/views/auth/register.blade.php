@@ -1,5 +1,5 @@
 <x-guest-layout>
-<div class="bg-white p-4 p-md-5 rounded-4 shadow-soft border-0" x-data="{ role: '{{ old('role_type', 'student') === 'hostel-owner' ? 'owner' : 'student' }}', showPw: false, showCpw: false }">
+<div class="bg-white p-4 p-md-5 rounded-4 shadow-soft border-0" x-data="{ role: '{{ old('role_type', 'student') === 'hostel-owner' ? 'owner' : 'student' }}', showPw: false, showCpw: false }" style="min-width: 500px">
     <div class="text-center mb-4">
         <h3 class="font-outfit fw-extrabold text-dark mb-1">Create Account</h3>
         <p class="text-secondary small">Join KotaHostel today to find or list student accommodations</p>

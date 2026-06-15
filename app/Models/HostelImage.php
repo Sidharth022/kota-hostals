@@ -28,4 +28,12 @@ class HostelImage extends Model
     {
         return $this->belongsTo(Hostel::class);
     }
+
+    public function getUrl(): string
+    {
+        if (str_starts_with($this->image_path, 'http://') || str_starts_with($this->image_path, 'https://')) {
+            return $this->image_path;
+        }
+        return asset('storage/' . $this->image_path);
+    }
 }

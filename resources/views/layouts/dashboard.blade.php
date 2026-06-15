@@ -17,23 +17,23 @@
                     <div class="nav flex-column nav-pills gap-1">
                         @if(Auth::user()->isStudent())
                             <!-- Student Navigation -->
-                            <a href="/dashboard" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2.5 transition-all gap-2 {{ request()->routeIs('dashboard') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
+                            <a href="/dashboard" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2 transition-all gap-2 {{ request()->routeIs('dashboard') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
                                 <i class="fa-solid fa-address-card"></i>
                                 <span>Overview</span>
                             </a>
-                            <a href="/dashboard/favorites" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2.5 transition-all gap-2 {{ request()->routeIs('dashboard.favorites') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
+                            <a href="/dashboard/favorites" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2 transition-all gap-2 {{ request()->routeIs('dashboard.favorites') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
                                 <i class="fa-solid fa-heart"></i>
                                 <span>Saved Hostels</span>
                             </a>
-                            <a href="/dashboard/inquiries" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2.5 transition-all gap-2 {{ request()->routeIs('dashboard.inquiries') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
+                            <a href="/dashboard/inquiries" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2 transition-all gap-2 {{ request()->routeIs('dashboard.inquiries') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
                                 <i class="fa-solid fa-envelope"></i>
                                 <span>My Inquiries</span>
                             </a>
-                            <a href="/dashboard/applications" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2.5 transition-all gap-2 {{ request()->routeIs('dashboard.applications') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
+                            <a href="/dashboard/applications" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2 transition-all gap-2 {{ request()->routeIs('dashboard.applications') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
                                 <i class="fa-solid fa-file-contract"></i>
                                 <span>My Applications</span>
                             </a>
-                            <a href="/dashboard/reviews" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2.5 transition-all gap-2 {{ request()->routeIs('dashboard.reviews') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
+                            <a href="/dashboard/reviews" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2 transition-all gap-2 {{ request()->routeIs('dashboard.reviews') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
                                 <i class="fa-solid fa-star"></i>
                                 <span>My Reviews</span>
                             </a>
@@ -41,25 +41,25 @@
 
                         @if(Auth::user()->isOwner())
                             <!-- Owner Navigation -->
-                            <a href="/owner" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2.5 transition-all gap-2 {{ request()->routeIs('owner.dashboard') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
+                            <a href="/owner" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2 transition-all gap-2 {{ request()->routeIs('owner.dashboard') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
                                 <i class="fa-solid fa-chart-line"></i>
                                 <span>Overview</span>
                             </a>
-                            <a href="/owner/hostels" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2.5 transition-all gap-2 {{ request()->routeIs('owner.hostels*') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
+                            <a href="/owner/hostels" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2 transition-all gap-2 {{ request()->routeIs('owner.hostels*') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
                                 <i class="fa-solid fa-hotel"></i>
                                 <span>Manage Hostels</span>
                             </a>
-                            <a href="/owner/inquiries" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2.5 transition-all gap-2 {{ request()->routeIs('owner.inquiries*') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
+                            <a href="/owner/inquiries" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2 transition-all gap-2 {{ request()->routeIs('owner.inquiries*') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
                                 <i class="fa-solid fa-inbox"></i>
                                 <span>Hostel Inquiries</span>
                             </a>
-                            <a href="/owner/applications" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2.5 transition-all gap-2 {{ request()->routeIs('owner.applications*') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
+                            <a href="/owner/applications" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2 transition-all gap-2 {{ request()->routeIs('owner.applications*') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
                                 <i class="fa-solid fa-file-invoice"></i>
                                 <span>Hostel Applications</span>
                             </a>
                         @endif
 
-                        <a href="/profile" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2.5 transition-all gap-2 {{ request()->routeIs('profile.edit') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
+                        <a href="/profile" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2 transition-all gap-2 {{ request()->routeIs('profile.edit') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
                             <i class="fa-solid fa-user-gear"></i>
                             <span>Settings</span>
                         </a>

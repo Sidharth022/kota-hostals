@@ -25,7 +25,7 @@
             const toastHtml = `
                 <div id="${toastId}" class="toast align-items-center border-0 text-white ${bgClass} shadow-soft" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="4000">
                     <div class="d-flex align-items-center p-2">
-                        <div class="toast-body d-flex align-items-center gap-2.5">
+                        <div class="toast-body d-flex align-items-center gap-2">
                             <i class="fa-solid ${iconClass} fs-5"></i>
                             <span class="fw-semibold small">${message}</span>
                         </div>

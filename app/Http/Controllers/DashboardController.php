@@ -33,7 +33,7 @@ class DashboardController extends Controller
 
     public function favorites()
     {
-        $favorites = Auth::user()->favoriteHostels()->with(['area'])->get();
+        $favorites = Auth::user()->favoriteHostels()->with(['area', 'images'])->get();
         return view('dashboard.favorites', compact('favorites'));
     }
 
@@ -86,7 +86,7 @@ class DashboardController extends Controller
 
     public function ownerHostels()
     {
-        $hostels = Auth::user()->hostels()->with(['area'])->latest()->get();
+        $hostels = Auth::user()->hostels()->with(['area', 'images'])->latest()->get();
         return view('owner.hostels', compact('hostels'));
     }
 
@@ -127,16 +127,18 @@ class DashboardController extends Controller
         $data['featured'] = false;
         $data['verified'] = false;
 
+        if ($request->hasFile('gallery_images')) {
+            $paths = [];
+            foreach ($request->file('gallery_images') as $image) {
+                $paths[] = $image->store('hostels', 'public');
+            }
+            $data['gallery_images'] = $paths;
+        }
+
         $hostel = Hostel::create($data);
 
         if ($request->has('facilities')) {
             $hostel->facilities()->sync($request->facilities);
-        }
-
-        if ($request->hasFile('gallery_images')) {
-            foreach ($request->file('gallery_images') as $image) {
-                $hostel->addMedia($image)->toMediaCollection('gallery');
-            }
         }
 
         return redirect()->route('owner.hostels')->with('status', 'Hostel created successfully.');
@@ -147,6 +149,8 @@ class DashboardController extends Controller
         if ($hostel->owner_id !== Auth::id()) {
             abort(403, 'Unauthorized.');
         }
+
+        $hostel->load('images');
 
         $areas = Area::orderBy('title')->get();
         $facilities = Facility::orderBy('sort_order')->orderBy('title')->get();
@@ -180,7 +184,7 @@ class DashboardController extends Controller
             'gallery_images' => 'nullable|array',
             'gallery_images.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
             'delete_images' => 'nullable|array',
-            'delete_images.*' => 'exists:media,id',
+            'delete_images.*' => 'exists:hostel_images,id',
             'meta_title' => 'nullable|string|max:191',
             'meta_description' => 'nullable|string|max:320',
         ]);
@@ -190,17 +194,23 @@ class DashboardController extends Controller
         $hostel->facilities()->sync($request->facilities ?? []);
 
         if ($request->has('delete_images')) {
-            foreach ($request->delete_images as $mediaId) {
-                $media = $hostel->media()->find($mediaId);
-                if ($media) {
-                    $media->delete();
+            foreach ($request->delete_images as $imageId) {
+                $img = $hostel->images()->find($imageId);
+                if ($img) {
+                    \Illuminate\Support\Facades\Storage::disk('public')->delete($img->image_path);
+                    $img->delete();
                 }
             }
         }
 
         if ($request->hasFile('gallery_images')) {
-            foreach ($request->file('gallery_images') as $image) {
-                $hostel->addMedia($image)->toMediaCollection('gallery');
+            $maxOrder = $hostel->images()->max('sort_order') ?? -1;
+            foreach ($request->file('gallery_images') as $index => $image) {
+                $path = $image->store('hostels', 'public');
+                $hostel->images()->create([
+                    'image_path' => $path,
+                    'sort_order' => $maxOrder + 1 + $index,
+                ]);
             }
         }
 

@@ -21,8 +21,8 @@
 
                             <!-- Image Section -->
                             <div class="position-relative overflow-hidden bg-light" style="height: 180px;">
-                                @if($hostel->getMedia('gallery')->first())
-                                    <img src="{{ $hostel->getMedia('gallery')->first()->getUrl() }}" alt="{{ $hostel->title }}" class="w-100 h-100 object-cover transition-transform duration-300 img-hover-zoom">
+                                @if($hostel->images->first())
+                                    <img src="{{ $hostel->images->first()->getUrl() }}" alt="{{ $hostel->title }}" class="w-100 h-100 object-cover transition-transform duration-300 img-hover-zoom">
                                 @else
                                     <div class="w-100 h-100 d-flex align-items-center justify-content-center text-muted opacity-25">
                                         <i class="fa-solid fa-hotel display-5"></i>

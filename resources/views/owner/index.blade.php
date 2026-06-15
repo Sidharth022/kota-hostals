@@ -85,21 +85,21 @@
                     <table class="table align-middle text-sm text-secondary mb-0">
                         <thead class="table-light text-uppercase text-dark font-semibold">
                             <tr>
-                                <th class="px-4 py-3 border-0 rounded-start-pill">Hostel</th>
+                                <th class="px-4 py-3  ">Hostel</th>
                                 <th class="px-4 py-3 border-0">Inquirer Name</th>
                                 <th class="px-4 py-3 border-0">Mobile</th>
                                 <th class="px-4 py-3 border-0">Message</th>
-                                <th class="px-4 py-3 border-0 rounded-end-pill">Date</th>
+                                <th class="px-4 py-3  ">Date</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($recentInquiries as $inquiry)
                                 <tr class="hover-bg-light transition-colors">
                                     <td class="px-4 py-3 fw-bold text-dark border-0">{{ $inquiry->hostel->title }}</td>
-                                    <td class="px-4 py-3 border-0 text-muted">{{ $inquiry->name }}</td>
-                                    <td class="px-4 py-3 border-0 text-muted">{{ $inquiry->mobile }}</td>
-                                    <td class="px-4 py-3 border-0 text-muted text-truncate" style="max-width: 150px; display: inline-block; overflow: hidden; white-space: nowrap;">{{ $inquiry->message }}</td>
-                                    <td class="px-4 py-3 border-0 text-muted">{{ $inquiry->created_at->format('d M Y') }}</td>
+                                    <td class="px-4 py-3  text-muted">{{ $inquiry->name }}</td>
+                                    <td class="px-4 py-3  text-muted">{{ $inquiry->mobile }}</td>
+                                    <td class="px-4 py-3  text-muted text-truncate" style="max-width: 150px; display: inline-block; overflow: hidden; white-space: nowrap;">{{ $inquiry->message }}</td>
+                                    <td class="px-4 py-3  text-muted">{{ $inquiry->created_at->format('d M Y') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

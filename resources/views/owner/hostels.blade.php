@@ -21,8 +21,8 @@
                             <div class="d-flex align-items-start gap-3 flex-grow-1">
                                 <!-- Thumbnail -->
                                 <div class="rounded-xl overflow-hidden bg-light d-flex align-items-center justify-content-center flex-shrink-0" style="width: 80px; height: 80px;">
-                                    @if($hostel->getMedia('gallery')->first())
-                                        <img src="{{ $hostel->getMedia('gallery')->first()->getUrl() }}" alt="" class="w-100 h-100 object-cover">
+                                    @if($hostel->images->first())
+                                        <img src="{{ $hostel->images->first()->getUrl() }}" alt="" class="w-100 h-100 object-cover">
                                     @else
                                         <i class="fa-solid fa-hotel text-muted opacity-25 fs-2"></i>
                                     @endif

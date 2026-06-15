@@ -226,19 +226,19 @@
                     </h5>
 
                     <!-- Existing Media Items -->
-                    @if($hostel->getMedia('gallery')->count() > 0)
+                    @if($hostel->images->count() > 0)
                         <div class="mb-4">
                             <label class="form-label small fw-semibold text-secondary d-block">Current Images (Select to delete)</label>
                             <div class="row g-3">
-                                @foreach($hostel->getMedia('gallery') as $media)
+                                @foreach($hostel->images as $image)
                                     <div class="col-4 col-sm-3 col-md-2">
                                         <div class="card border border-light-subtle rounded-xl overflow-hidden p-1 bg-light text-center h-100">
                                             <div class="ratio ratio-1x1 rounded-xl overflow-hidden mb-2">
-                                                <img src="{{ $media->getUrl() }}" alt="" class="object-cover">
+                                                <img src="{{ $image->getUrl() }}" alt="" class="object-cover">
                                             </div>
                                             <div class="form-check justify-content-center d-flex gap-1.5 mb-1">
-                                                <input class="form-check-input border-danger" type="checkbox" name="delete_images[]" value="{{ $media->id }}" id="del_img_{{ $media->id }}">
-                                                <label class="form-check-label text-danger small fw-semibold cursor-pointer" for="del_img_{{ $media->id }}">Delete</label>
+                                                <input class="form-check-input border-danger" type="checkbox" name="delete_images[]" value="{{ $image->id }}" id="del_img_{{ $image->id }}">
+                                                <label class="form-check-label text-danger small fw-semibold cursor-pointer" for="del_img_{{ $image->id }}">Delete</label>
                                             </div>
                                         </div>
                                     </div>

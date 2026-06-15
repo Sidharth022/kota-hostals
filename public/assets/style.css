@@ -86,11 +86,9 @@
        z-index: 1060;
    }
 
-   @media (min-width: 1280px) {
-       h1 {
-           font-size: 35px !important;
-           font-weight: 700 !important;
-       }
+   h1 {
+       font-size: 35px !important;
+       font-weight: 700 !important;
    }
 
    /* Shared premium card design styles */
@@ -258,4 +256,128 @@
 
    .divider-text:not(:empty)::after {
        margin-left: .5em;
+   }
+
+
+   /* Hero Banner Background Overlay */
+   .hero-banner {
+       background-color: #ffffff;
+       background-size: 60% !important;
+       background-position: center right !important;
+       padding-top: 5rem;
+       padding-bottom: 7rem;
+       background-repeat: no-repeat;
+   }
+
+   /* Search Widget Customizations */
+   .search-nav-tabs .btn {
+       border-radius: 0.5rem;
+       font-weight: 600;
+       font-size: 0.95rem;
+   }
+
+   .search-nav-tabs .btn-active {
+       background-color: #0d6efd;
+       color: #fff;
+   }
+
+   .search-nav-tabs .btn-inactive {
+       background-color: #f8f9fa;
+       color: #6c757d;
+       border: 1px solid #dee2e6;
+   }
+
+   .input-group-custom .form-control,
+   .input-group-custom .form-select {
+       border: 1px solid #dee2e6;
+       box-shadow: none;
+       border-left: none;
+       padding-left: 0;
+       font-size: 0.95rem;
+   }
+
+   .input-group-custom .input-group-text {
+       background-color: transparent;
+       border: 1px solid #dee2e6;
+       border-right: none;
+       color: #6c757d;
+   }
+
+   .input-group-custom .form-control:focus,
+   .input-group-custom .form-select:focus {
+       border-color: #dee2e6;
+   }
+
+   /* Feature Bar & Badges */
+   .feature-icon-circle {
+       width: 50px;
+       height: 50px;
+       border-radius: 50%;
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       background-color: rgba(13, 110, 253, 0.08);
+       color: #0d6efd;
+       font-size: 1.25rem;
+   }
+
+   .popular-badge {
+       background-color: #f8f9fa;
+       color: #495057;
+       font-weight: 500;
+       border: 1px solid #e9ecef;
+       text-decoration: none;
+       padding: 0.35rem 1rem;
+       border-radius: 50rem;
+       font-size: 0.85rem;
+       transition: all 0.2s;
+   }
+
+   .popular-badge:hover {
+       background-color: #e9ecef;
+       color: #0d6efd;
+   }
+
+
+   .hover-shadow:hover {
+       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04) !important;
+       border-color: var(--bs-primary) !important;
+   }
+
+   .hover-shadow:hover .group-hover-color {
+       color: var(--bs-primary) !important;
+   }
+
+   .hover-shadow:hover .hover-primary-bg {
+       background-color: var(--bs-primary) !important;
+       color: #ffffff !important;
+   }
+
+   .hover-color-primary:hover {
+       color: var(--bs-primary) !important;
+   }
+
+   .object-fit-cover {
+       object-fit: cover;
+   }
+
+   .hover-scale:hover {
+       transform: scale(1.05);
+   }
+
+
+   @media (max-width: 767px) {
+       h1 {
+           font-size: 25px !important;
+       }
+
+       p {
+           font-size: 14px !important;
+       }
+
+       .hero-banner {
+           background: #fff !important;
+           padding-top: 3rem;
+       }
+
    }

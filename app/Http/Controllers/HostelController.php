@@ -20,7 +20,7 @@ class HostelController extends Controller
         $hostel = Hostel::where('slug', $slug)
             ->where('area_id', $area->id)
             ->where('status', 'active')
-            ->with(['area', 'facilities', 'coachingCenters', 'reviews.user'])
+            ->with(['area', 'facilities', 'coachingCenters', 'reviews.user', 'images'])
             ->withAvg('reviews', 'rating')
             ->firstOrFail();
 

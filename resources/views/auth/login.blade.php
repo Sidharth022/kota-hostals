@@ -1,5 +1,5 @@
 <x-guest-layout>
-<div class="bg-white p-4 p-md-5 rounded-4 shadow-soft border-0" x-data="{ role: 'student', showPw: false }">
+<div class="bg-white p-4 p-md-5 rounded-4 shadow-soft border-0" x-data="{ role: 'student', showPw: false }" style="min-width: 500px">
     <div class="text-center mb-4">
         <h3 class="font-outfit fw-extrabold text-dark mb-1">Welcome Back!</h3>
         <p class="text-secondary small">Login to your account and continue</p>

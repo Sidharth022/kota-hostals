@@ -1,32 +1,135 @@
 <x-app-layout>
-    <!-- 1. HERO SECTION -->
-    <div class="position-relative overflow-hidden bg-primary-light py-5 py-md-5 mb-5">
-        <div class="container py-5 text-center">
-            <div class="mb-4">
-                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill uppercase tracking-wider small fw-bold">📍 Student Hub of India</span>
-            </div>
-            
-            <h1 class="font-outfit display-4 fw-extrabold text-dark tracking-tight leading-tight max-w-4xl mx-auto mb-3">
-                Find the Perfect Hostel in <span class="text-primary position-relative d-inline-block">Kota</span> for Your Coaching Journey
-            </h1>
-            
-            <p class="text-muted lead max-w-2xl mx-auto mb-5">
-                Shortlist premium student hostels and PGs near Allen, Resonance, Motion, and other coaching institutes in Kota. Save time and focus on your studies!
-            </p>
+   
 
-            <!-- Search Widget Bar -->
-            <div class="card border-0 shadow-soft-lg p-3 max-w-3xl mx-auto rounded-3xl bg-white mb-3" style="max-width: 720px;">
-                <div class="row g-2 align-items-center">
-                    <div class="col-12 col-md d-flex align-items-center gap-2 px-3">
-                        <i class="fa-solid fa-magnifying-glass text-secondary"></i>
-                        <input type="text" id="homeSearchInput" placeholder="Enter landmark, coaching institute, or area..." class="form-control border-0 py-2 text-sm focus-ring" style="--bs-focus-ring-color: transparent;">
+    <div class="hero-banner position-relative" style="background-image: linear-gradient(90deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.514) 45%, rgba(255, 255, 255, 0.1) 100%), url('{{ asset( 'assets/hero.webp') }}');">
+        <div class="container position-relative z-1">
+            <div class="row">
+                <div class="col-lg-8 col-xl-8">
+                    <div class="mb-4">
+                        <span class="badge bg-transparent border border-primary text-primary px-3 py-2 rounded-pill d-inline-flex align-items-center gap-2 shadow-sm" style="background-color: rgba(13, 110, 253, 0.05) !important;">
+                            <i class="fa-regular fa-star"></i> #1 HOSTEL PLATFORM IN KOTA
+                        </span>
                     </div>
-                    <div class="col-12 col-md-auto">
-                        <button onclick="window.location.href='/hostels?search=' + document.getElementById('homeSearchInput').value" class="btn btn-primary w-100 py-2.5 px-4 shadow-sm shadow-primary/10">
-                            Search Hostels
-                        </button>
+                    
+                    <h1 class="font-outfit display-4 fw-bolder text-dark mb-3" style="line-height: 1.2;">
+                        Find the Perfect <span class="text-primary">Hostel</span> Near Your <br> <span class="text-primary">Coaching Institute</span>
+                    </h1>
+                    
+                    <p class="text-secondary lead mb-5 pe-lg-5" style="font-size: 1.1rem;">
+                        Discover comfortable, safe and affordable hostels near Kota's top coaching institutes.
+                    </p>
+
+                    <div class="bg-white p-4 rounded-4 shadow-lg border border-light">
+                        <div class="search-nav-tabs d-flex gap-2 mb-4">
+                            <button class="btn btn-active px-4 py-2 d-flex align-items-center gap-2 shadow-sm border-0">
+                                <i class="fa-regular fa-user"></i> Search Hostels
+                            </button>
+                            <button class="btn btn-inactive px-4 py-2 d-flex align-items-center gap-2">
+                                <i class="fa-regular fa-building"></i> Search by Coaching
+                            </button>
+                        </div>
+
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold text-dark mb-1">Select Area</label>
+                                <div class="input-group input-group-custom rounded-3 overflow-hidden">
+                                    <span class="input-group-text"><i class="fa-solid fa-location-dot"></i></span>
+                                    <input type="text" id="homeSearchInput" class="form-control" placeholder="Choose Area">
+                                    <span class="input-group-text bg-transparent border-start-0 border-left-0"><i class="fa-solid fa-chevron-down small"></i></span>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold text-dark mb-1">Near Coaching Institute</label>
+                                <div class="input-group input-group-custom rounded-3 overflow-hidden">
+                                    <span class="input-group-text"><i class="fa-solid fa-building-columns"></i></span>
+                                    <select class="form-select border-end-0 text-muted">
+                                        <option selected>Select Coaching</option>
+                                        <option value="allen">Allen</option>
+                                        <option value="motion">Motion</option>
+                                        <option value="resonance">Resonance</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="form-label small fw-bold text-dark mb-1">Budget Range</label>
+                                <div class="input-group input-group-custom rounded-3 overflow-hidden">
+                                    <span class="input-group-text"><i class="fa-solid fa-indian-rupee-sign"></i></span>
+                                    <select class="form-select border-end-0 text-muted">
+                                        <option selected>Any Budget</option>
+                                        <option value="low">Under ₹5,000</option>
+                                        <option value="med">₹5,000 - ₹10,000</option>
+                                        <option value="high">Above ₹10,000</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex flex-column flex-lg-row align-items-lg-center justify-content-between gap-3 pt-3">
+                            <div class="d-flex align-items-center gap-2 flex-wrap">
+                                <span class="small fw-bold text-dark me-1">Popular Searches:</span>
+                                <a href="javascript:void(0)" class="popular-badge">Allen</a>
+                                <a href="javascript:void(0)" class="popular-badge">Motion</a>
+                                <a href="javascript:void(0)" class="popular-badge">Resonance</a>
+                                <a href="javascript:void(0)" class="popular-badge">Vibrant</a>
+                                <a href="javascript:void(0)" class="popular-badge">Unacademy</a>
+                            </div>
+                            
+                            <button onclick="window.location.href='/hostels?search=' + document.getElementById('homeSearchInput').value" class="btn btn-primary px-4 py-2.5 rounded-3 fw-semibold shadow-sm d-flex align-items-center justify-content-center gap-2" style="min-width: 170px;">
+                                <i class="fa-solid fa-magnifying-glass"></i> Search
+                            </button>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container position-relative" style="margin-top: -3.5rem; z-index: 10; margin-bottom: 4rem;">
+        <div class="bg-white rounded-4 shadow border border-light p-4 p-md-4">
+            <div class="row g-4 text-center text-md-start align-items-center">
+                
+                <div class="col-6 col-lg-3 d-flex flex-column flex-md-row align-items-center align-items-md-center gap-3">
+                    <div class="feature-icon-circle flex-shrink-0">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1 fw-bold text-dark font-outfit">Verified Hostels</h6>
+                        <small class="text-muted d-block" style="font-size: 0.8rem;">100% verified & trusted listings</small>
+                    </div>
+                </div>
+                
+                <div class="col-6 col-lg-3 d-flex flex-column flex-md-row align-items-center align-items-md-center gap-3">
+                    <div class="feature-icon-circle flex-shrink-0">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1 fw-bold text-dark font-outfit">Prime Locations</h6>
+                        <small class="text-muted d-block" style="font-size: 0.8rem;">Near top coaching institutes & centers</small>
+                    </div>
+                </div>
+                
+                <div class="col-6 col-lg-3 d-flex flex-column flex-md-row align-items-center align-items-md-center gap-3">
+                    <div class="feature-icon-circle flex-shrink-0">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1 fw-bold text-dark font-outfit">Affordable Prices</h6>
+                        <small class="text-muted d-block" style="font-size: 0.8rem;">Options for every budget</small>
+                    </div>
+                </div>
+                
+                <div class="col-6 col-lg-3 d-flex flex-column flex-md-row align-items-center align-items-md-center gap-3">
+                    <div class="feature-icon-circle flex-shrink-0">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1 fw-bold text-dark font-outfit">24/7 Support</h6>
+                        <small class="text-muted d-block" style="font-size: 0.8rem;">We're here to help you anytime</small>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -81,8 +184,8 @@
                                     {{ $hostel->gender_type === 'coed' ? 'Co-ed' : ucfirst($hostel->gender_type) }}
                                 </span>
 
-                                @if($hostel->getMedia('gallery')->first())
-                                    <img src="{{ $hostel->getMedia('gallery')->first()->getUrl() }}" alt="{{ $hostel->title }}" class="w-100 h-100 object-fit-cover hover-scale transition-transform duration-500">
+                                @if($hostel->images->first())
+                                    <img src="{{ $hostel->images->first()->getUrl() }}" alt="{{ $hostel->title }}" class="w-100 h-100 object-fit-cover hover-scale transition-transform duration-500">
                                 @else
                                     <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-primary" style="background: linear-gradient(135deg, rgba(61, 95, 234, 0.04) 0%, rgba(61, 95, 234, 0.12) 100%);">
                                         <i class="fa-solid fa-building fs-1 text-primary text-opacity-25 mb-2"></i>
@@ -230,27 +333,4 @@
         </div>
     </div>
 
-    <!-- Hover effects stylesheet overrides -->
-    <style>
-        .hover-shadow:hover {
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04) !important;
-            border-color: var(--bs-primary) !important;
-        }
-        .hover-shadow:hover .group-hover-color {
-            color: var(--bs-primary) !important;
-        }
-        .hover-shadow:hover .hover-primary-bg {
-            background-color: var(--bs-primary) !important;
-            color: #ffffff !important;
-        }
-        .hover-color-primary:hover {
-            color: var(--bs-primary) !important;
-        }
-        .object-fit-cover {
-            object-fit: cover;
-        }
-        .hover-scale:hover {
-            transform: scale(1.05);
-        }
-    </style>
 </x-app-layout>

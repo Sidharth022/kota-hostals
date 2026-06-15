@@ -8,7 +8,7 @@
         @if($reviews->count() > 0)
             <div class="d-flex flex-column gap-3">
                 @foreach($reviews as $review)
-                    <div class="card border border-light-subtle rounded-2xl p-4 hover-shadow transition-all bg-white d-flex flex-column gap-2.5">
+                    <div class="card border border-light-subtle rounded-2xl p-4 hover-shadow transition-all bg-white d-flex flex-column gap-2">
                         <div class="d-flex justify-content-between align-items-center gap-2 flex-wrap">
                             <h5 class="font-outfit fw-bold text-dark mb-0">
                                 <a href="/hostels/{{ $review->hostel->area->slug }}/{{ $review->hostel->slug }}" class="text-decoration-none text-dark hover-color-primary">

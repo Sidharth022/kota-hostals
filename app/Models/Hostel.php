@@ -41,6 +41,7 @@ class Hostel extends Model implements HasMedia
         'meta_title',
         'meta_description',
         'views',
+        'gallery_images',
     ];
 
     protected function casts(): array
@@ -229,9 +230,41 @@ class Hostel extends Model implements HasMedia
 
     public function getPrimaryImageAttribute(): ?string
     {
-        return $this->images()->first()?->image_path
-            ?? $this->getFirstMediaUrl('gallery')
-            ?: null;
+        $first = $this->images()->first();
+        return $first ? $first->getUrl() : null;
+    }
+
+    public function getGalleryImagesAttribute(): array
+    {
+        return $this->images()->pluck('image_path')->toArray();
+    }
+
+    public function setGalleryImagesAttribute($value): void
+    {
+        $value = is_array($value) ? array_filter($value) : [];
+
+        $existingImages = $this->images()->get();
+        $existingPaths = $existingImages->pluck('image_path')->toArray();
+
+        // Delete images that are not in the new list
+        foreach ($existingImages as $img) {
+            if (!in_array($img->image_path, $value)) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($img->image_path);
+                $img->delete();
+            }
+        }
+
+        // Add new images or update sort order
+        foreach ($value as $index => $path) {
+            if (!in_array($path, $existingPaths)) {
+                $this->images()->create([
+                    'image_path' => $path,
+                    'sort_order' => $index,
+                ]);
+            } else {
+                $this->images()->where('image_path', $path)->update(['sort_order' => $index]);
+            }
+        }
     }
 
     // ----------------------------------------------------------------

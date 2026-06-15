@@ -53,7 +53,7 @@ class HostelSearch extends Component
     public function render()
     {
         $query = Hostel::where('status', 'active')
-            ->with(['area', 'facilities'])
+            ->with(['area', 'facilities', 'images'])
             ->withAvg('reviews', 'rating');
 
         // Apply Search (title, description, address)

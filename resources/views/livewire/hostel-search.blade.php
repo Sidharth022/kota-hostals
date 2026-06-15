@@ -150,8 +150,8 @@
                                         {{ $hostel->gender_type === 'coed' ? 'Co-ed' : ucfirst($hostel->gender_type) }}
                                     </span>
 
-                                    @if($hostel->getMedia('gallery')->first())
-                                        <img src="{{ $hostel->getMedia('gallery')->first()->getUrl() }}" alt="{{ $hostel->title }}" class="w-100 h-100 object-fit-cover hover-scale transition-transform duration-500">
+                                    @if($hostel->images->first())
+                                        <img src="{{ $hostel->images->first()->getUrl() }}" alt="{{ $hostel->title }}" class="w-100 h-100 object-fit-cover hover-scale transition-transform duration-500">
                                     @else
                                         <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-primary" style="background: linear-gradient(135deg, rgba(61, 95, 234, 0.04) 0%, rgba(61, 95, 234, 0.12) 100%);">
                                             <i class="fa-solid fa-building fs-1 text-primary text-opacity-25 mb-2"></i>

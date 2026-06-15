@@ -50,27 +50,27 @@
         <!-- GALLERY IMAGES -->
         <div class="row g-3 mb-4" style="height: 400px;">
             @php
-                $media = $hostel->getMedia('gallery');
+                $images = $hostel->images;
             @endphp
-            @if($media->count() > 0)
+            @if($images->count() > 0)
                 <!-- Main Large Image -->
                 <div class="col-12 col-md-8 h-100">
                     <div class="card h-100 border-0 rounded-3xl overflow-hidden shadow-soft">
-                        <img src="{{ $media[0]->getUrl() }}" alt="" class="w-100 h-100 object-fit-cover hover-scale-img transition-transform duration-500">
+                        <img src="{{ $images[0]->getUrl() }}" alt="" class="w-100 h-100 object-fit-cover hover-scale-img transition-transform duration-500">
                     </div>
                 </div>
                 <!-- Small side images -->
                 <div class="col-4 d-none d-md-block h-100">
                     <div class="row g-3 h-100">
-                        @for($i = 1; $i < min($media->count(), 3); $i++)
+                        @for($i = 1; $i < min($images->count(), 3); $i++)
                             <div class="col-12 h-50">
                                 <div class="card h-100 border-0 rounded-3xl overflow-hidden shadow-soft">
-                                    <img src="{{ $media[$i]->getUrl() }}" alt="" class="w-100 h-100 object-fit-cover hover-scale-img transition-transform duration-500">
+                                    <img src="{{ $images[$i]->getUrl() }}" alt="" class="w-100 h-100 object-fit-cover hover-scale-img transition-transform duration-500">
                                 </div>
                             </div>
                         @endfor
-                        @if($media->count() < 3)
-                            @for($j = $media->count(); $j < 3; $j++)
+                        @if($images->count() < 3)
+                            @for($j = $images->count(); $j < 3; $j++)
                                 <div class="col-12 h-50">
                                     <div class="card h-100 border-0 rounded-3xl bg-light d-flex align-items-center justify-content-center text-secondary opacity-25">
                                         <i class="fa-solid fa-image fs-3"></i>
@@ -107,9 +107,9 @@
                 <!-- Room Types & Rent details -->
                 <div class="card border-0 shadow-soft p-4 rounded-3xl bg-white mb-4">
                     <h5 class="font-outfit fw-bold text-dark mb-4">Pricing & Availability</h5>
-                    <div class="row g-4">
+                    <div class="row g-4 align-items-end">
                         <!-- Rent details -->
-                        <div class="col-12 col-sm-6">
+                        <div class="col-12 col-sm-6 d-flex flex-column gap-3">
                             <div class="d-flex justify-content-between align-items-center py-2.5 border-bottom border-light-subtle text-sm">
                                 <span class="text-secondary fw-medium">Monthly Rent</span>
                                 <strong class="text-primary font-outfit fs-5">₹{{ number_format($hostel->monthly_rent) }}</strong>
@@ -123,7 +123,7 @@
                         </div>
                         
                         <!-- Room Details -->
-                        <div class="col-12 col-sm-6">
+                        <div class="col-12 col-sm-6 d-flex flex-column gap-3">
                             <div class="d-flex justify-content-between align-items-center py-2.5 border-bottom border-light-subtle text-sm">
                                 <span class="text-secondary fw-medium">Room Configurations</span>
                                 <span class="text-dark fw-bold capitalize">
@@ -147,7 +147,7 @@
                         <div class="row g-3">
                             @foreach($hostel->facilities as $facility)
                                 <div class="col-6 col-sm-4 col-md-3">
-                                    <div class="d-flex align-items-center gap-2.5 p-3 bg-light rounded-xl border border-light-subtle text-xs">
+                                    <div class="d-flex align-items-center gap-2 p-3 bg-light rounded-xl border border-light-subtle text-xs flex-column">
                                         <span class="fs-6 text-primary">{{ $facility->icon ?? '⚡' }}</span>
                                         <span class="text-dark fw-bold">{{ $facility->title }}</span>
                                     </div>
@@ -167,8 +167,8 @@
                             <table class="table align-middle text-sm text-secondary mb-0">
                                 <thead class="table-light text-uppercase text-dark font-semibold">
                                     <tr>
-                                        <th class="px-4 py-3 border-0 rounded-start-pill">Coaching Center</th>
-                                        <th class="px-4 py-3 border-0 rounded-end-pill">Distance</th>
+                                        <th class="px-4 py-3  ">Coaching Center</th>
+                                        <th class="px-4 py-3  ">Distance</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -219,7 +219,7 @@
                             @foreach($approvedReviews as $review)
                                 <div class="list-group-item py-4 px-0 border-light-subtle">
                                     <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap mb-2">
-                                        <div class="d-flex align-items-center gap-2.5">
+                                        <div class="d-flex align-items-center gap-2">
                                             <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white font-bold rounded-circle uppercase text-xs" style="width: 32px; height: 32px;">
                                                 {{ substr($review->user->name, 0, 1) }}
                                             </div>

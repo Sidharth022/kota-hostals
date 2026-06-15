@@ -24,7 +24,7 @@ class HomeController extends Controller
         // 2. Featured Hostels (with average rating and area details)
         $featuredHostels = Hostel::where('status', 'active')
             ->where('featured', true)
-            ->with(['area'])
+            ->with(['area', 'images'])
             ->withAvg('reviews', 'rating')
             ->latest()
             ->limit(6)

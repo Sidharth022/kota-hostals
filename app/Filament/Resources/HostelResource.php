@@ -75,13 +75,9 @@ class HostelResource extends Resource
                             ->required()
                             ->columnSpanFull(),
 
-                        Textarea::make('address')
-                            ->required()
-                            ->rows(2)
-                            ->columnSpanFull(),
+                        Textarea::make('address')->required()->rows(2)->columnSpanFull(),
 
-                        Select::make('gender_type')
-                            ->options([
+                        Select::make('gender_type')->options([
                                 'boys' => 'Boys',
                                 'girls' => 'Girls',
                                 'coed' => 'Co-ed',

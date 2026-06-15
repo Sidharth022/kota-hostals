@@ -61,10 +61,10 @@
                     <table class="table align-middle text-sm text-secondary mb-0">
                         <thead class="table-light text-uppercase text-dark font-semibold">
                             <tr>
-                                <th class="px-4 py-3 border-0 rounded-start-pill">Hostel</th>
+                                <th class="px-4 py-3  ">Hostel</th>
                                 <th class="px-4 py-3 border-0">Message</th>
                                 <th class="px-4 py-3 border-0">Status</th>
-                                <th class="px-4 py-3 border-0 rounded-end-pill">Date</th>
+                                <th class="px-4 py-3  ">Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,7 +75,7 @@
                                        </a> --}}
 
                                     </td>
-                                    <td class="px-4 py-3 border-0 text-muted">{{ $inquiry->message }}</td>
+                                    <td class="px-4 py-3  text-muted">{{ $inquiry->message }}</td>
                                     <td class="px-4 py-3 border-0">
                                         <span class="badge px-2.5 py-1 rounded-pill text-xs fw-bold
                                             {{ $inquiry->status === 'new' ? 'bg-danger text-white' : '' }}
