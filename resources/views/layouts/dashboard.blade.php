@@ -2,7 +2,7 @@
     <div class="container py-5">
         <div class="row g-4">
             <!-- Sidebar Navigation -->
-            <aside class="col-12 col-md-4 col-lg-3">
+            <aside class="col-12 ">
                 <div class="card border-0 shadow-soft p-4 rounded-3xl bg-white">
                     <div class="d-flex align-items-center gap-3 pb-4 mb-4 border-bottom">
                         <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white font-bold rounded-circle uppercase fs-5" style="width: 44px; height: 44px;">
@@ -14,7 +14,7 @@
                         </div>
                     </div>
 
-                    <div class="nav flex-column nav-pills gap-1">
+                    <div class="nav nav-pills gap-1">
                         @if(Auth::user()->isStudent())
                             <!-- Student Navigation -->
                             <a href="/dashboard" class="nav-link py-2.5 px-3 rounded-xl small fw-semibold d-flex align-items-center gap-2 transition-all gap-2 {{ request()->routeIs('dashboard') ? 'active bg-primary text-white shadow-sm' : 'text-secondary bg-hover-light' }}">
@@ -68,7 +68,7 @@
             </aside>
 
             <!-- Main Panel Content -->
-            <div class="col-12 col-md-8 col-lg-9">
+            <div class="col-12 ">
                 <div class="card border-0 shadow-soft p-4 p-md-5 rounded-3xl bg-white">
                     {{ $slot }}
                 </div>

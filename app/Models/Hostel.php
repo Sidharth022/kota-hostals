@@ -252,6 +252,7 @@ class Hostel extends Model implements HasMedia
                 $img->delete();
             }
         }
+
         // Add new images or update sort order
         foreach ($value as $index => $path) {
             if (!in_array($path, $existingPaths)) {

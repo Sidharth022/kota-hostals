@@ -236,7 +236,7 @@
                                             <div class="ratio ratio-1x1 rounded-xl overflow-hidden mb-2">
                                                 <img src="{{ $image->getUrl() }}" alt="" class="object-cover">
                                             </div>
-                                            <div class="form-check justify-content-center d-flex gap-1.5 mb-1">
+                                            <div class="form-check justify-content-center d-flex gap-2 mb-1">
                                                 <input class="form-check-input border-danger" type="checkbox" name="delete_images[]" value="{{ $image->id }}" id="del_img_{{ $image->id }}">
                                                 <label class="form-check-label text-danger small fw-semibold cursor-pointer" for="del_img_{{ $image->id }}">Delete</label>
                                             </div>

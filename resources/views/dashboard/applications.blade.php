@@ -10,7 +10,7 @@
                 @foreach($applications as $application)
                     <div class="card border border-light-subtle rounded-2xl p-4 hover-shadow transition-all bg-white">
                         <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3">
-                            <div class="d-flex flex-column gap-1.5">
+                            <div class="d-flex flex-column gap-2">
                                 <div class="d-flex align-items-center gap-2 flex-wrap">
                                     <h5 class="font-outfit fw-bold text-dark mb-0">
                                         <a href="/hostels/{{ $application->hostel->area->slug }}/{{ $application->hostel->slug }}" class="text-decoration-none text-dark hover-color-primary">

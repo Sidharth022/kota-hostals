@@ -115,12 +115,15 @@ class DashboardController extends Controller
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
             'google_map_url' => 'nullable|url|max:1000',
-            'facilities' => 'nullable|array',
-            'facilities.*' => 'exists:facilities,id',
             'gallery_images' => 'nullable|array',
             'gallery_images.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
             'meta_title' => 'nullable|string|max:191',
             'meta_description' => 'nullable|string|max:320',
+        ]);
+
+        $request->validate([
+            'facilities' => 'nullable|array',
+            'facilities.*' => 'exists:facilities,id',
         ]);
 
         $data['owner_id'] = Auth::id();
@@ -134,7 +137,6 @@ class DashboardController extends Controller
             }
             $data['gallery_images'] = $paths;
         }
-
         $hostel = Hostel::create($data);
 
         if ($request->has('facilities')) {
@@ -179,15 +181,20 @@ class DashboardController extends Controller
             'latitude' => 'nullable|numeric',
             'longitude' => 'nullable|numeric',
             'google_map_url' => 'nullable|url|max:1000',
-            'facilities' => 'nullable|array',
-            'facilities.*' => 'exists:facilities,id',
             'gallery_images' => 'nullable|array',
             'gallery_images.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
-            'delete_images' => 'nullable|array',
-            'delete_images.*' => 'exists:hostel_images,id',
             'meta_title' => 'nullable|string|max:191',
             'meta_description' => 'nullable|string|max:320',
         ]);
+
+        $request->validate([
+            'facilities' => 'nullable|array',
+            'facilities.*' => 'exists:facilities,id',
+            'delete_images' => 'nullable|array',
+            'delete_images.*' => 'exists:hostel_images,id',
+        ]);
+
+        unset($data['gallery_images']);
 
         $hostel->update($data);
 

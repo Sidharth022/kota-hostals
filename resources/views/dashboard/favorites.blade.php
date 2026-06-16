@@ -33,7 +33,7 @@
                             <!-- Details -->
                             <div class="card-body p-4 d-flex flex-column justify-content-between">
                                 <div class="mb-3">
-                                    <div class="d-flex align-items-center gap-1.5 text-muted small fw-semibold mb-2">
+                                    <div class="d-flex align-items-center gap-2 text-muted small fw-semibold mb-2">
                                         <i class="fa-solid fa-location-dot text-secondary"></i>
                                         <span>{{ $hostel->area->title }}</span>
                                     </div>

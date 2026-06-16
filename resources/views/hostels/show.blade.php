@@ -41,7 +41,7 @@
             
             <h1 class="font-outfit fw-extrabold text-dark tracking-tight leading-tight display-6 mb-2">{{ $hostel->title }}</h1>
             
-            <p class="text-secondary small d-flex align-items-center gap-1.5 fw-medium mb-0">
+            <p class="text-secondary small d-flex align-items-center gap-2 fw-medium mb-0">
                 <i class="fa-solid fa-location-dot text-muted"></i>
                 <span>{{ $hostel->address }}, {{ $hostel->area->title }}, Kota</span>
             </p>
@@ -110,11 +110,11 @@
                     <div class="row g-4 align-items-end">
                         <!-- Rent details -->
                         <div class="col-12 col-sm-6 d-flex flex-column gap-3">
-                            <div class="d-flex justify-content-between align-items-center py-2.5 border-bottom border-light-subtle text-sm">
+                            <div class="d-flex justify-content-between align-items-center py-2.5 text-sm">
                                 <span class="text-secondary fw-medium">Monthly Rent</span>
                                 <strong class="text-primary font-outfit fs-5">₹{{ number_format($hostel->monthly_rent) }}</strong>
                             </div>
-                            <div class="d-flex justify-content-between align-items-center py-2.5 border-bottom border-light-subtle text-sm">
+                            <div class="d-flex justify-content-between align-items-center py-2.5 text-sm">
                                 <span class="text-secondary fw-medium">Security Deposit</span>
                                 <strong class="text-dark fw-bold">
                                     {{ $hostel->security_deposit ? '₹' . number_format($hostel->security_deposit) : 'Nil' }}
@@ -124,13 +124,13 @@
                         
                         <!-- Room Details -->
                         <div class="col-12 col-sm-6 d-flex flex-column gap-3">
-                            <div class="d-flex justify-content-between align-items-center py-2.5 border-bottom border-light-subtle text-sm">
+                            <div class="d-flex justify-content-between align-items-center py-2.5 text-sm">
                                 <span class="text-secondary fw-medium">Room Configurations</span>
                                 <span class="text-dark fw-bold capitalize">
                                     {{ is_array($hostel->room_types) ? implode(', ', $hostel->room_types) : 'Single' }}
                                 </span>
                             </div>
-                            <div class="d-flex justify-content-between align-items-center py-2.5 border-bottom border-light-subtle text-sm">
+                            <div class="d-flex justify-content-between align-items-center py-2.5 text-sm">
                                 <span class="text-secondary fw-medium">Total / Available Rooms</span>
                                 <span class="text-dark fw-bold">
                                     {{ $hostel->total_rooms ?? 'N/A' }} / {{ $hostel->available_rooms ?? 'N/A' }}

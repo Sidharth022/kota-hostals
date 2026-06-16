@@ -81,7 +81,7 @@
    /* Toast container */
    #toast-container {
        position: fixed;
-       bottom: 20px;
+       top: 20px;
        right: 20px;
        z-index: 1060;
    }
@@ -365,6 +365,10 @@
        transform: scale(1.05);
    }
 
+   .transition-transform {
+       transition: 0.3s;
+   }
+
 
    @media (max-width: 767px) {
        h1 {
@@ -380,4 +384,12 @@
            padding-top: 3rem;
        }
 
+   }
+
+   .bg-info {
+       background: rgb(62, 151, 62) !important;
+   }
+
+   .object-cover {
+       object-fit: cover;
    }

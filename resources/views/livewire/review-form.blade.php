@@ -6,7 +6,7 @@
             <!-- Star Rating Picker -->
             <div class="col-12">
                 <label class="form-label text-uppercase text-muted fw-bold small tracking-wider mb-2 d-block">Your Rating</label>
-                <div class="d-flex align-items-center gap-1.5">
+                <div class="d-flex align-items-center gap-2">
                     @for($i = 1; $i <= 5; $i++)
                         <button type="button" wire:click="setRating({{ $i }})" class="btn p-0 border-0 focus:outline-none">
                             <i class="fa-solid fa-star fs-3 {{ $i <= $rating ? 'text-warning' : 'text-light-emphasis opacity-25' }}" style="transition: transform 0.1s; transform: scale({{ $i === $rating ? '1.1' : '1' }})"></i>
