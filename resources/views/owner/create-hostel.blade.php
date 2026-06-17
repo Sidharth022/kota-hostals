@@ -171,6 +171,32 @@
                     </div>
                 </div>
 
+                <!-- Section 3.5: Nearest Coaching Centers -->
+                <div>
+                    <h5 class="font-outfit fw-bold text-dark mb-3 border-bottom pb-2">
+                        <i class="fa-solid fa-graduation-cap text-primary me-2"></i>Nearest Coaching Centers
+                    </h5>
+                    <p class="text-secondary small mb-3">Select coaching centers near this hostel and enter their distance in kilometers.</p>
+                    <div class="row g-3">
+                        @foreach($coachingCenters as $center)
+                            <div class="col-12 col-md-6 col-lg-4">
+                                <div class="p-3 rounded-xl border border-light-subtle d-flex flex-column gap-2" style="background-color: #fafbfd;">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="coaching_centers[]" value="{{ $center->id }}" id="coaching_{{ $center->id }}" {{ is_array(old('coaching_centers')) && in_array($center->id, old('coaching_centers')) ? 'checked' : '' }}>
+                                        <label class="form-check-label text-dark small fw-semibold" for="coaching_{{ $center->id }}">
+                                            {{ $center->title }}
+                                        </label>
+                                    </div>
+                                    <div class="input-group input-group-sm">
+                                        <input type="number" step="0.01" min="0" name="coaching_distances[{{ $center->id }}]" value="{{ old('coaching_distances.'.$center->id) }}" class="form-control rounded-start-xl" placeholder="e.g. 0.5">
+                                        <span class="input-group-text bg-light rounded-end-xl">km away</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
                 <!-- Section 4: Location details -->
                 <div>
                     <h5 class="font-outfit fw-bold text-dark mb-3 border-bottom pb-2">

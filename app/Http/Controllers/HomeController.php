@@ -48,6 +48,42 @@ class HomeController extends Controller
         $areas = Area::where('status', true)->orderBy('title')->get();
         $allCoachingCenters = CoachingCenter::where('status', true)->orderBy('title')->get();
 
-        return view('welcome', compact('popularAreas', 'featuredHostels', 'coachingCenters', 'testimonials', 'areas', 'allCoachingCenters'));
+        // Unique Competitive Sections (Feature 4)
+        $topRankedHostels = Hostel::where('status', 'active')
+            ->with(['area', 'images'])
+            ->withAvg('reviews', 'rating')
+            ->orderBy('hostel_score', 'desc')
+            ->limit(3)
+            ->get();
+
+        $trendingHostels = Hostel::where('status', 'active')
+            ->with(['area', 'images'])
+            ->withAvg('reviews', 'rating')
+            ->withCount('viewsLog')
+            ->orderBy('views_log_count', 'desc')
+            ->limit(3)
+            ->get();
+
+        $bestValueHostels = Hostel::select('hostels.*')
+            ->selectRaw('(hostel_score / monthly_rent) as value_index')
+            ->where('status', 'active')
+            ->where('monthly_rent', '>', 0)
+            ->with(['area', 'images'])
+            ->withAvg('reviews', 'rating')
+            ->orderBy('value_index', 'desc')
+            ->limit(3)
+            ->get();
+
+        return view('welcome', compact(
+            'popularAreas',
+            'featuredHostels',
+            'coachingCenters',
+            'testimonials',
+            'areas',
+            'allCoachingCenters',
+            'topRankedHostels',
+            'trendingHostels',
+            'bestValueHostels'
+        ));
     }
 }

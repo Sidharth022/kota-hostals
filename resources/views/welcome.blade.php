@@ -239,6 +239,218 @@
         </div>
     </div>
 
+    <!-- SMART RECOMMENDATIONS -->
+    <div class="container py-5 mb-5">
+        <div class="text-center mb-5">
+            <h2 class="font-outfit fw-bold text-dark mb-1">Smart Recommendations</h2>
+            <p class="text-secondary small">Hand-picked selections based on scores, popularity, and value.</p>
+            
+            <div class="d-inline-flex p-1 bg-light rounded-3 mt-3" id="smartHostelsTab" role="tablist">
+                <button class="nav-link active btn px-4 py-2 fw-semibold rounded-3 border-0 transition-all" id="top-ranked-tab" data-bs-toggle="tab" data-bs-target="#top-ranked" type="button" role="tab" aria-controls="top-ranked" aria-selected="true">
+                    Top Ranked
+                </button>
+                <button class="nav-link btn px-4 py-2 fw-semibold rounded-3 border-0 transition-all" id="trending-tab" data-bs-toggle="tab" data-bs-target="#trending" type="button" role="tab" aria-controls="trending" aria-selected="false">
+                    Trending
+                </button>
+                <button class="nav-link btn px-4 py-2 fw-semibold rounded-3 border-0 transition-all" id="best-value-tab" data-bs-toggle="tab" data-bs-target="#best-value" type="button" role="tab" aria-controls="best-value" aria-selected="false">
+                    Best Value
+                </button>
+            </div>
+        </div>
+
+        <div class="tab-content" id="smartHostelsTabContent">
+            <!-- 1. Top Ranked -->
+            <div class="tab-pane fade show active" id="top-ranked" role="tabpanel" aria-labelledby="top-ranked-tab">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @foreach($topRankedHostels as $hostel)
+                        <div class="col">
+                            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white hover-card transition-all">
+                                <div class="position-relative overflow-hidden bg-light" style="height: 190px;">
+                                    <span class="position-absolute top-0 start-0 m-3 z-3 badge px-3 py-2 text-uppercase small fw-bold shadow-sm
+                                        {{ $hostel->gender_type === 'boys' ? 'bg-primary text-white' : '' }}
+                                        {{ $hostel->gender_type === 'girls' ? 'bg-danger text-white' : '' }}
+                                        {{ $hostel->gender_type === 'coed' ? 'bg-success text-white' : '' }}
+                                    " style="border-radius: 0.5rem; font-size: 10px; letter-spacing: 0.5px;">
+                                        {{ $hostel->gender_type === 'coed' ? 'Co-ed' : ucfirst($hostel->gender_type) }}
+                                    </span>
+                                    @if($hostel->images->first())
+                                        <img src="{{ $hostel->images->first()->getUrl() }}" alt="{{ $hostel->title }}" class="w-100 h-100 object-fit-cover hover-scale transition-transform duration-500">
+                                    @else
+                                        <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-primary" style="background: linear-gradient(135deg, rgba(61, 95, 234, 0.04) 0%, rgba(61, 95, 234, 0.12) 100%);">
+                                            <i class="fa-solid fa-building fs-1 text-primary text-opacity-25 mb-2"></i>
+                                            <span class="text-primary fw-bold text-uppercase tracking-wider text-opacity-50" style="font-size: 9px; letter-spacing: 1px;">KotaHostel Premium</span>
+                                        </div>
+                                    @endif
+                                    @if($hostel->verified)
+                                        <span class="position-absolute top-0 end-0 m-3 z-3 bg-white text-primary rounded shadow-sm px-3 py-1 border border-primary-light d-inline-flex align-items-center gap-1 fw-bold" style="font-size: 10px; border-radius: 0.5rem;">
+                                            <i class="fa-solid fa-circle-check fs-6 text-primary"></i> Verified
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                                    <div class="mb-3">
+                                        <div class="d-flex align-items-center justify-content-between text-muted small mb-2" style="font-size: 11px;">
+                                            <span class="fw-medium text-secondary"><i class="fa-solid fa-location-dot me-1"></i>{{ $hostel->area->title }}</span>
+                                            <span class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-10 px-2 py-1 rounded d-inline-flex align-items-center gap-1">
+                                                <i class="fa-solid fa-award text-success"></i> Score: {{ $hostel->hostel_score }}
+                                            </span>
+                                        </div>
+                                        <h6 class="font-outfit fw-extrabold text-dark mb-0 line-clamp-1 fs-6">
+                                            <a href="/hostels/{{ $hostel->area->slug }}/{{ $hostel->slug }}" class="text-dark text-decoration-none hover-color-primary">
+                                                {{ $hostel->title }}
+                                            </a>
+                                        </h6>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between pt-3 border-top border-light-subtle">
+                                        <div>
+                                            <span class="text-muted text-uppercase tracking-wider small d-block" style="font-size: 8px; font-weight: 700;">Starts From</span>
+                                            <span class="text-primary fw-extrabold font-outfit fs-5">₹{{ number_format($hostel->monthly_rent) }}<span class="text-muted small fw-normal" style="font-size: 11px;">/mo</span></span>
+                                        </div>
+                                        <a href="/hostels/{{ $hostel->area->slug }}/{{ $hostel->slug }}" class="btn btn-outline-primary btn-sm px-3 rounded-xl fw-bold text-xs" style="padding-top: 6px; padding-bottom: 6px;">
+                                            View Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- 2. Trending -->
+            <div class="tab-pane fade" id="trending" role="tabpanel" aria-labelledby="trending-tab">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @foreach($trendingHostels as $hostel)
+                        <div class="col">
+                            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white hover-card transition-all">
+                                <div class="position-relative overflow-hidden bg-light" style="height: 190px;">
+                                    <span class="position-absolute top-0 start-0 m-3 z-3 badge px-3 py-2 text-uppercase small fw-bold shadow-sm
+                                        {{ $hostel->gender_type === 'boys' ? 'bg-primary text-white' : '' }}
+                                        {{ $hostel->gender_type === 'girls' ? 'bg-danger text-white' : '' }}
+                                        {{ $hostel->gender_type === 'coed' ? 'bg-success text-white' : '' }}
+                                    " style="border-radius: 0.5rem; font-size: 10px; letter-spacing: 0.5px;">
+                                        {{ $hostel->gender_type === 'coed' ? 'Co-ed' : ucfirst($hostel->gender_type) }}
+                                    </span>
+                                    @if($hostel->images->first())
+                                        <img src="{{ $hostel->images->first()->getUrl() }}" alt="{{ $hostel->title }}" class="w-100 h-100 object-fit-cover hover-scale transition-transform duration-500">
+                                    @else
+                                        <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-primary" style="background: linear-gradient(135deg, rgba(61, 95, 234, 0.04) 0%, rgba(61, 95, 234, 0.12) 100%);">
+                                            <i class="fa-solid fa-building fs-1 text-primary text-opacity-25 mb-2"></i>
+                                            <span class="text-primary fw-bold text-uppercase tracking-wider text-opacity-50" style="font-size: 9px; letter-spacing: 1px;">KotaHostel Premium</span>
+                                        </div>
+                                    @endif
+                                    @if($hostel->verified)
+                                        <span class="position-absolute top-0 end-0 m-3 z-3 bg-white text-primary rounded shadow-sm px-3 py-1 border border-primary-light d-inline-flex align-items-center gap-1 fw-bold" style="font-size: 10px; border-radius: 0.5rem;">
+                                            <i class="fa-solid fa-circle-check fs-6 text-primary"></i> Verified
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                                    <div class="mb-3">
+                                        <div class="d-flex align-items-center justify-content-between text-muted small mb-2" style="font-size: 11px;">
+                                            <span class="fw-medium text-secondary"><i class="fa-solid fa-location-dot me-1"></i>{{ $hostel->area->title }}</span>
+                                            <span class="badge bg-info bg-opacity-10 text-info border border-info border-opacity-10 px-2 py-1 rounded d-inline-flex align-items-center gap-1">
+                                                <i class="fa-solid fa-fire text-info"></i> {{ number_format($hostel->views) }} views
+                                            </span>
+                                        </div>
+                                        <h6 class="font-outfit fw-extrabold text-dark mb-0 line-clamp-1 fs-6">
+                                            <a href="/hostels/{{ $hostel->area->slug }}/{{ $hostel->slug }}" class="text-dark text-decoration-none hover-color-primary">
+                                                {{ $hostel->title }}
+                                            </a>
+                                        </h6>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between pt-3 border-top border-light-subtle">
+                                        <div>
+                                            <span class="text-muted text-uppercase tracking-wider small d-block" style="font-size: 8px; font-weight: 700;">Starts From</span>
+                                            <span class="text-primary fw-extrabold font-outfit fs-5">₹{{ number_format($hostel->monthly_rent) }}<span class="text-muted small fw-normal" style="font-size: 11px;">/mo</span></span>
+                                        </div>
+                                        <a href="/hostels/{{ $hostel->area->slug }}/{{ $hostel->slug }}" class="btn btn-outline-primary btn-sm px-3 rounded-xl fw-bold text-xs" style="padding-top: 6px; padding-bottom: 6px;">
+                                            View Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- 3. Best Value -->
+            <div class="tab-pane fade" id="best-value" role="tabpanel" aria-labelledby="best-value-tab">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    @foreach($bestValueHostels as $hostel)
+                        <div class="col">
+                            <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden bg-white hover-card transition-all">
+                                <div class="position-relative overflow-hidden bg-light" style="height: 190px;">
+                                    <span class="position-absolute top-0 start-0 m-3 z-3 badge px-3 py-2 text-uppercase small fw-bold shadow-sm
+                                        {{ $hostel->gender_type === 'boys' ? 'bg-primary text-white' : '' }}
+                                        {{ $hostel->gender_type === 'girls' ? 'bg-danger text-white' : '' }}
+                                        {{ $hostel->gender_type === 'coed' ? 'bg-success text-white' : '' }}
+                                    " style="border-radius: 0.5rem; font-size: 10px; letter-spacing: 0.5px;">
+                                        {{ $hostel->gender_type === 'coed' ? 'Co-ed' : ucfirst($hostel->gender_type) }}
+                                    </span>
+                                    @if($hostel->images->first())
+                                        <img src="{{ $hostel->images->first()->getUrl() }}" alt="{{ $hostel->title }}" class="w-100 h-100 object-fit-cover hover-scale transition-transform duration-500">
+                                    @else
+                                        <div class="w-100 h-100 d-flex flex-column align-items-center justify-content-center text-primary" style="background: linear-gradient(135deg, rgba(61, 95, 234, 0.04) 0%, rgba(61, 95, 234, 0.12) 100%);">
+                                            <i class="fa-solid fa-building fs-1 text-primary text-opacity-25 mb-2"></i>
+                                            <span class="text-primary fw-bold text-uppercase tracking-wider text-opacity-50" style="font-size: 9px; letter-spacing: 1px;">KotaHostel Premium</span>
+                                        </div>
+                                    @endif
+                                    @if($hostel->verified)
+                                        <span class="position-absolute top-0 end-0 m-3 z-3 bg-white text-primary rounded shadow-sm px-3 py-1 border border-primary-light d-inline-flex align-items-center gap-1 fw-bold" style="font-size: 10px; border-radius: 0.5rem;">
+                                            <i class="fa-solid fa-circle-check fs-6 text-primary"></i> Verified
+                                        </span>
+                                    @endif
+                                </div>
+                                <div class="card-body p-4 d-flex flex-column justify-content-between">
+                                    <div class="mb-3">
+                                        <div class="d-flex align-items-center justify-content-between text-muted small mb-2" style="font-size: 11px;">
+                                            <span class="fw-medium text-secondary"><i class="fa-solid fa-location-dot me-1"></i>{{ $hostel->area->title }}</span>
+                                            <span class="badge bg-warning bg-opacity-10 text-warning-emphasis border border-warning border-opacity-10 px-2 py-1 rounded d-inline-flex align-items-center gap-1">
+                                                <i class="fa-solid fa-percent text-warning-emphasis"></i> High Value
+                                            </span>
+                                        </div>
+                                        <h6 class="font-outfit fw-extrabold text-dark mb-0 line-clamp-1 fs-6">
+                                            <a href="/hostels/{{ $hostel->area->slug }}/{{ $hostel->slug }}" class="text-dark text-decoration-none hover-color-primary">
+                                                {{ $hostel->title }}
+                                            </a>
+                                        </h6>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between pt-3 border-top border-light-subtle">
+                                        <div>
+                                            <span class="text-muted text-uppercase tracking-wider small d-block" style="font-size: 8px; font-weight: 700;">Starts From</span>
+                                            <span class="text-primary fw-extrabold font-outfit fs-5">₹{{ number_format($hostel->monthly_rent) }}<span class="text-muted small fw-normal" style="font-size: 11px;">/mo</span></span>
+                                        </div>
+                                        <a href="/hostels/{{ $hostel->area->slug }}/{{ $hostel->slug }}" class="btn btn-outline-primary btn-sm px-3 rounded-xl fw-bold text-xs" style="padding-top: 6px; padding-bottom: 6px;">
+                                            View Details
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @push('styles')
+        <style>
+            #smartHostelsTab .nav-link {
+                color: #495057;
+                background-color: transparent;
+                border: none;
+                transition: all 0.2s ease-in-out;
+            }
+            #smartHostelsTab .nav-link.active {
+                color: #fff;
+                background-color: #0d6efd !important;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
+        </style>
+    @endpush
+
     <!-- 4. WHY US -->
     <div class="container py-5 mb-5">
         <div class="text-center mb-5">

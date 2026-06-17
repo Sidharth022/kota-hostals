@@ -63,9 +63,39 @@ class DashboardController extends Controller
         $totalHostels = $hostelIds->count();
         $totalInquiries = Inquiry::whereIn('hostel_id', $hostelIds)->count();
         $totalReviews = Review::whereIn('hostel_id', $hostelIds)->count();
-        $totalViews = Auth::user()->hostels()->sum('views');
+        $totalViews = \App\Models\HostelView::whereIn('hostel_id', $hostelIds)->count();
         $totalApplications = HostelApplication::whereIn('hostel_id', $hostelIds)->count();
         $favoriteCount = Favorite::whereIn('hostel_id', $hostelIds)->count();
+
+        // 1. Average Hostel Score
+        $avgScore = round(Auth::user()->hostels()->avg('hostel_score') ?? 70.0, 1);
+
+        // 2. Most Viewed Hostel & Best Performing Hostel
+        $mostViewedHostel = Auth::user()->hostels()
+            ->withCount('viewsLog')
+            ->orderBy('views_log_count', 'desc')
+            ->first();
+        $bestPerformingHostel = Auth::user()->hostels()->orderBy('hostel_score', 'desc')->first();
+
+        // 3. Monthly performance statistics
+        $inquiriesThisMonth = Inquiry::whereIn('hostel_id', $hostelIds)->where('created_at', '>=', now()->startOfMonth())->count();
+        $inquiriesLastMonth = Inquiry::whereIn('hostel_id', $hostelIds)->whereBetween('created_at', [now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
+        
+        $appsThisMonth = HostelApplication::whereIn('hostel_id', $hostelIds)->where('created_at', '>=', now()->startOfMonth())->count();
+        $appsLastMonth = HostelApplication::whereIn('hostel_id', $hostelIds)->whereBetween('created_at', [now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth()])->count();
+
+        $inquiryGrowth = $inquiriesLastMonth > 0 
+            ? round((($inquiriesThisMonth - $inquiriesLastMonth) / $inquiriesLastMonth) * 100, 1)
+            : ($inquiriesThisMonth > 0 ? 100.0 : 0.0);
+
+        // 4. Owner hostels list with Kota rankings
+        $myHostels = Auth::user()->hostels()
+            ->with(['area', 'images'])
+            ->get()
+            ->map(function ($hostel) {
+                $hostel->kota_rank = \App\Models\Hostel::active()->where('hostel_score', '>', $hostel->hostel_score)->count() + 1;
+                return $hostel;
+            });
 
         $recentInquiries = Inquiry::whereIn('hostel_id', $hostelIds)
             ->with(['hostel'])
@@ -80,6 +110,15 @@ class DashboardController extends Controller
             'totalViews',
             'totalApplications',
             'favoriteCount',
+            'avgScore',
+            'mostViewedHostel',
+            'bestPerformingHostel',
+            'inquiriesThisMonth',
+            'inquiriesLastMonth',
+            'appsThisMonth',
+            'appsLastMonth',
+            'inquiryGrowth',
+            'myHostels',
             'recentInquiries'
         ));
     }
@@ -94,7 +133,8 @@ class DashboardController extends Controller
     {
         $areas = Area::orderBy('title')->get();
         $facilities = Facility::orderBy('sort_order')->orderBy('title')->get();
-        return view('owner.create-hostel', compact('areas', 'facilities'));
+        $coachingCenters = \App\Models\CoachingCenter::where('status', true)->orderBy('title')->get();
+        return view('owner.create-hostel', compact('areas', 'facilities', 'coachingCenters'));
     }
 
     public function ownerStoreHostel(Request $request)
@@ -124,6 +164,9 @@ class DashboardController extends Controller
         $request->validate([
             'facilities' => 'nullable|array',
             'facilities.*' => 'exists:facilities,id',
+            'coaching_centers' => 'nullable|array',
+            'coaching_centers.*' => 'exists:coaching_centers,id',
+            'coaching_distances' => 'nullable|array',
         ]);
 
         $data['owner_id'] = Auth::id();
@@ -143,6 +186,17 @@ class DashboardController extends Controller
             $hostel->facilities()->sync($request->facilities);
         }
 
+        if ($request->has('coaching_centers')) {
+            $coachingData = [];
+            foreach ($request->coaching_centers as $centerId) {
+                $distance = $request->input("coaching_distances.{$centerId}");
+                if ($distance !== null && $distance !== '') {
+                    $coachingData[$centerId] = ['distance_km' => (float) $distance];
+                }
+            }
+            $hostel->coachingCenters()->sync($coachingData);
+        }
+
         return redirect()->route('owner.hostels')->with('status', 'Hostel created successfully.');
     }
 
@@ -152,11 +206,12 @@ class DashboardController extends Controller
             abort(403, 'Unauthorized.');
         }
 
-        $hostel->load('images');
+        $hostel->load(['images', 'coachingCenters']);
 
         $areas = Area::orderBy('title')->get();
         $facilities = Facility::orderBy('sort_order')->orderBy('title')->get();
-        return view('owner.edit-hostel', compact('hostel', 'areas', 'facilities'));
+        $coachingCenters = \App\Models\CoachingCenter::where('status', true)->orderBy('title')->get();
+        return view('owner.edit-hostel', compact('hostel', 'areas', 'facilities', 'coachingCenters'));
     }
 
     public function ownerUpdateHostel(Request $request, Hostel $hostel)
@@ -192,6 +247,9 @@ class DashboardController extends Controller
             'facilities.*' => 'exists:facilities,id',
             'delete_images' => 'nullable|array',
             'delete_images.*' => 'exists:hostel_images,id',
+            'coaching_centers' => 'nullable|array',
+            'coaching_centers.*' => 'exists:coaching_centers,id',
+            'coaching_distances' => 'nullable|array',
         ]);
 
         unset($data['gallery_images']);
@@ -199,6 +257,17 @@ class DashboardController extends Controller
         $hostel->update($data);
 
         $hostel->facilities()->sync($request->facilities ?? []);
+
+        $coachingData = [];
+        if ($request->has('coaching_centers')) {
+            foreach ($request->coaching_centers as $centerId) {
+                $distance = $request->input("coaching_distances.{$centerId}");
+                if ($distance !== null && $distance !== '') {
+                    $coachingData[$centerId] = ['distance_km' => (float) $distance];
+                }
+            }
+        }
+        $hostel->coachingCenters()->sync($coachingData);
 
         if ($request->has('delete_images')) {
             foreach ($request->delete_images as $imageId) {
@@ -270,11 +339,35 @@ class DashboardController extends Controller
             'status' => $request->status,
         ]);
 
+        // Recalculate hostel score since state changed
+        \App\Jobs\RecalculateHostelScore::dispatch($hostel);
+
         // Send notifications if applicable
         try {
             $application->student->notify(new \App\Notifications\ApplicationStatusNotification($application));
         } catch (\Exception $e) {}
 
         return redirect()->back()->with('status', 'Application status updated successfully.');
+    }
+
+    public function updateInquiryStatus(Request $request, Inquiry $inquiry)
+    {
+        $hostel = $inquiry->hostel;
+        if ($hostel->owner_id !== Auth::id()) {
+            abort(403, 'Unauthorized.');
+        }
+
+        $request->validate([
+            'status' => 'required|string|in:pending,responded,closed',
+        ]);
+
+        $inquiry->update([
+            'status' => $request->status,
+        ]);
+
+        // Recalculate hostel score since state changed
+        \App\Jobs\RecalculateHostelScore::dispatch($hostel);
+
+        return redirect()->back()->with('status', 'Inquiry status updated successfully.');
     }
 }

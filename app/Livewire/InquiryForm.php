@@ -48,7 +48,7 @@ class InquiryForm extends Component
             'email' => $this->email,
             'mobile' => $this->mobile,
             'message' => $this->message,
-            'status' => 'new',
+            'status' => 'pending',
         ]);
 
         // Trigger notification to hostel owner

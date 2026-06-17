@@ -64,13 +64,23 @@ class ReviewResource extends Resource
                     ->icon('heroicon-o-check-circle')
                     ->color('success')
                     ->visible(fn (Review $record) => auth()->user() && auth()->user()->isSuperAdmin() && $record->status !== 'approved')
-                    ->action(fn (Review $record) => $record->update(['status' => 'approved'])),
+                    ->action(function (Review $record) {
+                        $record->update(['status' => 'approved']);
+                        if ($record->hostel) {
+                            \App\Jobs\RecalculateHostelScore::dispatch($record->hostel);
+                        }
+                    }),
 
                 Action::make('reject')
                     ->icon('heroicon-o-x-circle')
                     ->color('danger')
                     ->visible(fn (Review $record) => auth()->user() && auth()->user()->isSuperAdmin() && $record->status !== 'rejected')
-                    ->action(fn (Review $record) => $record->update(['status' => 'rejected'])),
+                    ->action(function (Review $record) {
+                        $record->update(['status' => 'rejected']);
+                        if ($record->hostel) {
+                            \App\Jobs\RecalculateHostelScore::dispatch($record->hostel);
+                        }
+                    }),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
@@ -78,12 +88,26 @@ class ReviewResource extends Resource
                         ->label('Approve Selected')
                         ->icon('heroicon-o-check-circle')
                         ->color('success')
-                        ->action(fn (Collection $records) => $records->each->update(['status' => 'approved'])),
+                        ->action(function (Collection $records) {
+                            $records->each(function ($record) {
+                                $record->update(['status' => 'approved']);
+                                if ($record->hostel) {
+                                    \App\Jobs\RecalculateHostelScore::dispatch($record->hostel);
+                                }
+                            });
+                        }),
                     BulkAction::make('bulk_reject')
                         ->label('Reject Selected')
                         ->icon('heroicon-o-x-circle')
                         ->color('danger')
-                        ->action(fn (Collection $records) => $records->each->update(['status' => 'rejected'])),
+                        ->action(function (Collection $records) {
+                            $records->each(function ($record) {
+                                $record->update(['status' => 'rejected']);
+                                if ($record->hostel) {
+                                    \App\Jobs\RecalculateHostelScore::dispatch($record->hostel);
+                                }
+                            });
+                        }),
                     DeleteBulkAction::make(),
                 ]),
             ])

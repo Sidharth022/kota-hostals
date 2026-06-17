@@ -16,8 +16,8 @@
                             </div>
                             <div>
                                 <span class="badge px-2.5 py-1 rounded-pill text-xs fw-bold
-                                    {{ $inquiry->status === 'new' ? 'bg-danger text-white' : '' }}
-                                    {{ $inquiry->status === 'contacted' ? 'bg-warning text-dark' : '' }}
+                                    {{ $inquiry->status === 'pending' ? 'bg-danger text-white' : '' }}
+                                    {{ $inquiry->status === 'responded' ? 'bg-warning text-dark' : '' }}
                                     {{ $inquiry->status === 'closed' ? 'bg-success text-white' : '' }}
                                 " style="font-size: 11px;">
                                     {{ ucfirst($inquiry->status) }}
@@ -40,10 +40,35 @@
                             </div>
 
                             <!-- Quick Action Buttons to modify status -->
-                            <div>
-                                <a href="/admin/inquiries/{{ $inquiry->id }}/edit" class="text-primary text-decoration-none fw-semibold">
-                                    Update Status <i class="fa-solid fa-arrow-up-right-from-square ms-1 small"></i>
-                                </a>
+                            <div class="d-flex align-items-center gap-2">
+                                <span class="text-secondary small fw-bold me-2">Mark As:</span>
+                                
+                                @if($inquiry->status !== 'pending')
+                                    <form method="POST" action="{{ route('owner.inquiries.status', $inquiry->id) }}" class="d-inline">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="status" value="pending">
+                                        <button type="submit" class="btn btn-xs btn-outline-danger py-1 px-2.5 rounded fw-bold text-xs" style="font-size: 10px;">Pending</button>
+                                    </form>
+                                @endif
+
+                                @if($inquiry->status !== 'responded')
+                                    <form method="POST" action="{{ route('owner.inquiries.status', $inquiry->id) }}" class="d-inline">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="status" value="responded">
+                                        <button type="submit" class="btn btn-xs btn-outline-warning py-1 px-2.5 rounded fw-bold text-xs" style="font-size: 10px;">Responded</button>
+                                    </form>
+                                @endif
+
+                                @if($inquiry->status !== 'closed')
+                                    <form method="POST" action="{{ route('owner.inquiries.status', $inquiry->id) }}" class="d-inline">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="status" value="closed">
+                                        <button type="submit" class="btn btn-xs btn-outline-success py-1 px-2.5 rounded fw-bold text-xs" style="font-size: 10px;">Closed</button>
+                                    </form>
+                                @endif
                             </div>
                         </div>
                     </div>

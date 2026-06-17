@@ -27,7 +27,7 @@ class InquiriesRelationManager extends RelationManager
                 TextColumn::make('email'),
                 TextColumn::make('mobile'),
                 TextColumn::make('status')->badge()->color(fn ($state) => match ($state) {
-                    'new' => 'danger', 'contacted' => 'warning', 'closed' => 'success',
+                    'pending' => 'danger', 'responded' => 'warning', 'closed' => 'success', default => 'secondary',
                 }),
                 TextColumn::make('created_at')->dateTime('d M Y')->sortable(),
             ])

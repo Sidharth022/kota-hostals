@@ -49,11 +49,13 @@ class Inquiry extends Model
 
     public function scopeNew($query)
     {
-        return $query->where('status', 'new');
+        return $query->where('status', 'pending');
     }
 
     public function scopeForOwner($query, int $ownerId)
     {
         return $query->whereHas('hostel', fn ($q) => $q->where('owner_id', $ownerId));
     }
+
+
 }

@@ -38,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/owner/hostels/{hostel}', [DashboardController::class, 'ownerUpdateHostel'])->name('owner.hostels.update');
         Route::delete('/owner/hostels/{hostel}', [DashboardController::class, 'ownerDestroyHostel'])->name('owner.hostels.destroy');
         Route::get('/owner/inquiries', [DashboardController::class, 'ownerInquiries'])->name('owner.inquiries');
+        Route::patch('/owner/inquiries/{inquiry}/status', [DashboardController::class, 'updateInquiryStatus'])->name('owner.inquiries.status');
         Route::get('/owner/applications', [DashboardController::class, 'ownerApplications'])->name('owner.applications');
         Route::patch('/owner/applications/{application}/status', [DashboardController::class, 'updateApplicationStatus'])->name('owner.applications.status');
     });
@@ -50,4 +51,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__.'/auth.php';
 
+Route::get('/compare', [HostelController::class, 'compare'])->name('hostels.compare');
 Route::get('/{slug}', [PageController::class, 'show'])->name('pages.show');

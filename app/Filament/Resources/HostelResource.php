@@ -142,6 +142,38 @@ class HostelResource extends Resource
                             ->columnSpanFull(),
                     ]),
 
+                    // ── Tab 3.5: Coaching Centers ─────────────────────────
+                    Tabs\Tab::make('Coaching Centers')->schema([
+                        \Filament\Forms\Components\Repeater::make('coaching_centers_repeater')
+                            ->schema([
+                                Select::make('coaching_center_id')
+                                    ->label('Coaching Center')
+                                    ->options(\App\Models\CoachingCenter::where('status', true)->pluck('title', 'id'))
+                                    ->required()
+                                    ->distinct(),
+                                TextInput::make('distance_km')
+                                    ->label('Distance (km)')
+                                    ->numeric()
+                                    ->step('0.01')
+                                    ->required(),
+                            ])
+                            ->columns(2)
+                            ->columnSpanFull()
+                            ->label('Nearest Coaching Centers')
+                            ->createItemButtonLabel('Add Coaching Center Connection')
+                            ->afterStateHydrated(function ($component, $record) {
+                                if (! $record) {
+                                    return;
+                                }
+                                $state = $record->coachingCenters->map(fn ($item) => [
+                                    'coaching_center_id' => $item->id,
+                                    'distance_km' => $item->pivot->distance_km,
+                                ])->toArray();
+                                $component->state($state);
+                            })
+                            ->dehydrated(false),
+                    ]),
+
                     // ── Tab 4: Gallery ───────────────────────────────────
                     Tabs\Tab::make('Gallery')->schema([
                         FileUpload::make('gallery_images')

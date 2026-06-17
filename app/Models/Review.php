@@ -52,4 +52,6 @@ class Review extends Model
     {
         return $query->where('status', 'pending');
     }
+
+
 }

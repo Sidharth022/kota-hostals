@@ -10,6 +10,8 @@ class HostelApplication extends Model
 {
     use HasFactory;
 
+    protected $table = 'hostel_applications';
+
     protected $fillable = [
         'hostel_id',
         'student_id',
@@ -31,4 +33,6 @@ class HostelApplication extends Model
     {
         return $this->belongsTo(User::class, 'student_id');
     }
+
+
 }

@@ -28,8 +28,8 @@ class InquiryResource extends Resource
         return $schema->schema([
             Select::make('status')
                 ->options([
-                    'new' => 'New',
-                    'contacted' => 'Contacted',
+                    'pending' => 'Pending',
+                    'responded' => 'Responded',
                     'closed' => 'Closed',
                 ])
                 ->required(),
@@ -45,9 +45,10 @@ class InquiryResource extends Resource
             TextEntry::make('mobile'),
             TextEntry::make('message')->columnSpanFull(),
             TextEntry::make('status')->badge()->color(fn ($state) => match ($state) {
-                'new' => 'danger',
-                'contacted' => 'warning',
+                'pending' => 'danger',
+                'responded' => 'warning',
                 'closed' => 'success',
+                default => 'secondary',
             }),
             TextEntry::make('created_at')->dateTime('d M Y H:i'),
         ]);
@@ -62,16 +63,17 @@ class InquiryResource extends Resource
                 TextColumn::make('email')->searchable()->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('mobile'),
                 TextColumn::make('status')->badge()->color(fn ($state) => match ($state) {
-                    'new' => 'danger',
-                    'contacted' => 'warning',
+                    'pending' => 'danger',
+                    'responded' => 'warning',
                     'closed' => 'success',
+                    default => 'secondary',
                 }),
                 TextColumn::make('created_at')->dateTime('d M Y')->sortable(),
             ])
             ->filters([
                 SelectFilter::make('status')->options([
-                    'new' => 'New',
-                    'contacted' => 'Contacted',
+                    'pending' => 'Pending',
+                    'responded' => 'Responded',
                     'closed' => 'Closed',
                 ]),
             ])

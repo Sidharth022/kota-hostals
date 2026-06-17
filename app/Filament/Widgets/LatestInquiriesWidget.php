@@ -24,9 +24,10 @@ class LatestInquiriesWidget extends BaseWidget
                 TextColumn::make('status')
                     ->badge()
                     ->color(fn ($state) => match ($state) {
-                        'new' => 'danger',
-                        'contacted' => 'warning',
+                        'pending' => 'danger',
+                        'responded' => 'warning',
                         'closed' => 'success',
+                        default => 'secondary',
                     }),
                 TextColumn::make('created_at')->dateTime('d M Y H:i')->label('Date'),
             ]);
